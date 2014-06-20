@@ -21,6 +21,7 @@ import jinja2
 import os
 import logging
 
+from google.appengine.api import xmpp
 from webapp2_extras import sessions
 
 jinja_environment = jinja2.Environment(
@@ -58,6 +59,11 @@ class BaseHandler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
+class XMPPHandler(BaseHandler):
+    def post(self):
+        message = xmpp.Message(self.request.POST)
+        if message.body[0:5].lower() == 'hello':
+            message.reply("Greetings!")
 
 class MainHandler(BaseHandler):
     def get(self):
@@ -91,5 +97,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/profile', ProfileHandler),
     ('/match', MatchHandler),
-    ('/hangout', HangoutHandler)
+    ('/hangout', HangoutHandler),
+    ('/_ah/xmpp/message/chat/', XMPPHandler)
 ], debug=True)
