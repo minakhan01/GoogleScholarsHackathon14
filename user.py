@@ -13,3 +13,4 @@ class User (ndb.Model):
     mentors = ndb.StringProperty(repeated=True) # email address to mentor
     gender = ndb.StringProperty() # male/female
     age = ndb.IntegerProperty() #
+    tagling = ndb.StringProperty() # 3 word tagline
