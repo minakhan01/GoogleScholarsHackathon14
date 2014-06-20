@@ -57,33 +57,12 @@ class BaseHandler(webapp2.RequestHandler):
         return t.render(params)
 
     def render(self, template, **kw):
-        self.write(self.render_str(template, **kw))
-
-class XMPPHandler(BaseHandler):
-    def post(self):
-        message = xmpp.Message(self.request.POST)
-        if message.body[0:5].lower() == 'hello':
-            message.reply("Greetings!")
-
-class XMPPHandler_available(BaseHandler):
-    def post(self):
-        sender = self.request.get('from').split('/')[0]
-        xmpp.send_presence(sender, status=self.request.get('status'), presence_show=self.request.get('show'))    
-
-class XMPPHandler_unavailable(BaseHandler):
-    def post(self):
-        message = xmpp.Message(self.request.POST)
-
-class XMPPHandler_probe(BaseHandler):
-    def post(self):
-        message = xmpp.Message(self.request.POST)
-        if message.body[0:5].lower() == 'hello':
-            message.reply("Greetings!")                               
+        self.write(self.render_str(template, **kw))                               
 
 class MainHandler(BaseHandler):
     def get(self):
         self.response.write('Hello world!')
-        """user = users.get_current_user()
+        user = users.get_current_user()
         if user:
             greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
                         (user.nickname(), users.create_logout_url('/')))
@@ -91,7 +70,7 @@ class MainHandler(BaseHandler):
             greeting = ('<a href="%s">Sign in or register</a>.' %
                         users.create_login_url('/'))
 
-        self.response.out.write("<html><body>%s</body></html>" % greeting)"""
+        self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 
 class ProfileHandler(BaseHandler):
@@ -113,9 +92,5 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/profile', ProfileHandler),
     ('/match', MatchHandler),
-    ('/hangout', HangoutHandler),
-    ('/_ah/xmpp/presence/available/', XMPPHandler_available),
-    ('/_ah/xmpp/presence/unavailable/', XMPPHandler_unavailable),
-    ('/_ah/xmpp/presence/probe/', XMPPHandler_probe),
-    ('/_ah/xmpp/message/chat/', XMPPHandler)
+    ('/hangout', HangoutHandler)
 ], debug=True)
