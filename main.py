@@ -105,7 +105,7 @@ class ProfileHandler(BaseHandler):
 class MatchHandler(BaseHandler):
     def get:
         template_values = {}
-        self.render("matching.html", template_values)
+        self.render("match.html", template_values)
 
 class HangoutHandler(BaseHandler):
     def get:
@@ -115,6 +115,6 @@ class HangoutHandler(BaseHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/profile', ProfileHandler),
-    ('/matching', MatchHandler),
+    ('/match', MatchHandler),
     ('/hangout', HangoutHandler)
 ], debug=True)
