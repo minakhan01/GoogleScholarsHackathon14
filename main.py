@@ -20,7 +20,6 @@ import webapp2
 import jinja2
 import os
 import logging
-from logic import *
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -36,7 +35,7 @@ class MainHandler(webapp2.RequestHandler):
             greeting = ('<a href="%s">Sign in or register</a>.' %
                         users.create_login_url('/'))
 
-        #self.response.out.write("<html><body>%s</body></html>" % greeting)
+        self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
