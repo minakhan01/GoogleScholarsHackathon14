@@ -21,6 +21,7 @@ import jinja2
 import os
 import logging
 from user import User
+import sys
 
 from google.appengine.api import oauth
 from webapp2_extras import sessions
@@ -71,7 +72,6 @@ class MainHandler(BaseHandler):
             # consumer is making this request.
             user = oauth.get_current_user()
             console("I have user")
-
 
         except oauth.OAuthRequestError, e:
             self.write("Error")  
