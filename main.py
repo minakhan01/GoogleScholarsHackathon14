@@ -84,7 +84,7 @@ class BaseHandler(webapp2.RequestHandler):
         else:
         	self.format = 'html'
 
-class MainHandler(BlogHandler):
+class MainHandler(BaseHandler):
     def get(self):
         self.response.write('Hello world!')
         user = users.get_current_user()
