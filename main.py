@@ -21,6 +21,11 @@ import jinja2
 import os
 import logging
 
+# For Google+ Sign In
+from authomatic import Authomatic
+from authomatic.adapters import Webapp2Adapter
+from config import CONFIG
+
 from google.appengine.api import xmpp
 from webapp2_extras import sessions
 
@@ -57,7 +62,7 @@ class BaseHandler(webapp2.RequestHandler):
         return t.render(params)
 
     def render(self, template, **kw):
-        self.write(self.render_str(template, **kw))                               
+        self.write(self.render_str(template, **kw))
 
 class MainHandler(BaseHandler):
     def get(self):
