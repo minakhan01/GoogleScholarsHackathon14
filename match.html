@@ -1,9 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Match</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% body %}
 	<h1> Matches </h1>
-</body>
-</html>
+	<form>
+		{% for user in users %}
+			<h2> Alice {{user.first}} </h2>
+			<p> Age: {{user.age}} </p>
+			<img src="{{user.picture}}" />
+			<p> Tagline: {{user.tagline}} </p>
+
+			<p> Boss in: {{user.tags}} </p>
+			<p> Interests: </p>
+			<submit> Connect! </submit>
+		{% endfor %}
+	</form>
+{% endblock %}
