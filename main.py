@@ -78,6 +78,7 @@ class ProfileHandler(BaseHandler):
 class MatchHandler(BaseHandler):
     def get(self):
         user = User()
+        user.email = "david.patrzeba@gmail.com"
         user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
         user.first = "Alice"
         user.age = 19

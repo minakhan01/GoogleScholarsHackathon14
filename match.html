@@ -12,10 +12,16 @@
 						<a href=""> {{t}} </a>
 					{% endfor %} <br>
 				Boss in: {{user.tags}} <br>
-				Interests: {{user.interests}} <br>
-				<form action="/hangout?users=" + {{current_user.email}} + "&" + {{user.email}}>
-					<input type="submit" value="Connect!" >
-				</form>
+				Interests: {{user.interests}} <br>	
+
+<script src="https://apis.google.com/js/platform.js"></script>
+<div id="placeholder-div1"></div>
+
+<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+    <g:hangout render="createhangout"
+        invites="[{ id : '{{user.email}}', invite_type : 'EMAIL' }]">
+    </g:hangout>
+
 			</li>
 			{% endfor %}
 		</ul>
