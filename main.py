@@ -21,11 +21,6 @@ import jinja2
 import os
 import logging
 
-# For Google+ Sign In
-from authomatic import Authomatic
-from authomatic.adapters import Webapp2Adapter
-from config import CONFIG
-
 from google.appengine.api import xmpp
 from webapp2_extras import sessions
 
@@ -67,6 +62,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         self.response.write('Hello world!')
+        self.render("home.html")
         user = users.get_current_user()
         if user:
             greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
@@ -81,7 +77,7 @@ class MainHandler(BaseHandler):
 class ProfileHandler(BaseHandler):
     def get(self):
         template_values = {}
-        self.write("profile.html", *template_values)
+        self.render("profile.html", *template_values)
 
 class MatchHandler(BaseHandler):
     def get(self):
