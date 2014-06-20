@@ -83,8 +83,17 @@ class MatchHandler(BaseHandler):
         user.tagline = "I am awesome"
         user.tags = ["Python"]
         user.interests = ["tennis", "table tennis"]
-        users = [user]
-        template_values = {"users":users}
+
+        user2 = User()
+        user2.first = "Alice2"
+        user2.age = 192
+        user2.tagline = "I am awesome2"
+        user2.tags = ["Python2"]
+        user2.interests = ["tennis2", "table tennis2"]
+
+        current_user = User()
+        users = [user, user2]
+        template_values = {"users":users, "current_user":current_user}
         self.render("match.html", **template_values)
 
 class HangoutHandler(BaseHandler):
