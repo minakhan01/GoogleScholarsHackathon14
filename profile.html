@@ -1,33 +1,12 @@
 {% extends "base.html" %}
-{% body %}
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
-  <div class="row">
-    <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
-       <div class="well profile">
-            <div class="col-sm-12">
-                <div class="col-xs-12 col-sm-8">
-                    <h2>Nicole Pearson</h2>
-                    <p><strong>Nickname: </strong> BossCoder </p>
-                    <p><strong>Mission: </strong> Eat Sleep Code </p>
-                    <p><strong>Tags: </strong>
-                        <span class="tags">html5</span> 
-                        <span class="tags">css3</span>
-                        <span class="tags">jquery</span>
-                        <span class="tags">bootstrap3</span>
-                    </p>
-                </div>             
-                <div class="col-xs-12 col-sm-4 text-center">
-                    <figure>
-                        <img src="http://www.localcrimenews.com/wp-content/uploads/2013/07/default-user-icon-profile.png" alt="" class="img-circle img-responsive">
-                    </figure>
-                </div>
-            </div>            
-            
-       </div>                 
-    </div>
-  </div>
-</div>
-
-
+{% block body %}
+<form>
+	<h2> Alice {{user.first}} </h2>
+	<img src="{{user.picture}}" />
+	Age: <input type="text" name="age" value="{{user.age}}"> </br>
+	Tagline: <input type="text" name="age" value="{{user.tagline}}"> </br>
+	Boss in: <input type="text" name="age" value="{{user.tags}}"> </br>
+	Interests: <input type="text" name="age" value="{{user.interests}}"> </br>
+	<submit> Update My Profile! </submit>
+</form>
 {% endblock %}

@@ -1,15 +1,21 @@
 {% extends "base.html" %}
-{% body %}
-	<h1> Matches </h1>
-	<form>
+{% block body %}
+	<h1> Matches </h1>	
+	<div class="matches">
 		{% for user in users %}
+		<li class="slide">
 			<h2> Alice {{user.first}} </h2>
-			<p> Age: {{user.age}} </p>
+			Age: {{user.age}} </br>
 			<img src="{{user.picture}}" />
-			<p> Tagline: {{user.tagline}} </p>
-			<p> Boss in: {{user.tags}} </p>
-			<p> Interests: {{user.interests}} </p>
-			<submit> Connect! </submit>
+			Tagline: {{user.tagline}} </br>
+			Boss in: {{user.tags}} </br>
+			Interests: {{user.interests}} </br>
+			<form>
+				<submit> Connect! </submit>
+			</form>
+		</li>
 		{% endfor %}
-	</form>
+	</div>
+<script>
+</script>
 {% endblock %}
