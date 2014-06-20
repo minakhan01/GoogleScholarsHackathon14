@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% body %}
-
-
+<form>
+	<h2> Alice {{user.first}} </h2>
+	<img src="{{user.picture}}" />
+	Age: <input type="text" name="age" value="{{user.age}}"> </br>
+	Tagline: <input type="text" name="age" value="{{user.tagline}}"> </br>
+	Boss in: <input type="text" name="age" value="{{user.tags}}"> </br>
+	Interests: <input type="text" name="age" value="{{user.interests}}"> </br>
+	<submit> Update My Profile! </submit>
+</form>
 {% endblock %}
