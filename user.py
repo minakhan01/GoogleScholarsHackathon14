@@ -2,7 +2,7 @@
 from google.appengine.ext import ndb
 
 class User (ndb.Model):
-    email = ndb.StringProperty()
+    email = ndb.StringProperty(required=True)
     first = ndb.StringProperty()
     last = ndb.StringProperty()
     picture = ndb.StringProperty() # url to picture
