@@ -9,20 +9,26 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src='jquery.swipeshow.js'></script>
     <script src="js/bootstrap.min.js"></script>
+    <style>
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            display: inline;
+        }
+    </style>
 </head>
 <header>
     <h1>Spark</h1>
 </header>
 <nav>
-    <p>
-        <a href="/">Home</a>
-    </p>
-    <p>
-        <a href="/profile">My Profile</a>
-    </p>
-    <p>
-        <a href="/match">Find Mentors</a>
-    </p>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile">My Profile</a></li>
+        <li><a href="/match">Find Mentors</a></li>
+    </ul>
 </nav>
 <body>
     {% block body %}
