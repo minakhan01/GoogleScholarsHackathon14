@@ -98,17 +98,17 @@ class MainHandler(BlogHandler):
         self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 class ProfileHandler(BaseHandler):
-    def get:
+    def get(self):
         template_values = {}
         self.write("profile.html", template.render(template_values))
 
 class MatchHandler(BaseHandler):
-    def get:
+    def get(self):
         template_values = {}
         self.render("matching.html", template_values)
 
 class HangoutHandler(BaseHandler):
-    def get:
+    def get(self):
         template_values = {}
         self.render("hangout.html", template_values)
 
