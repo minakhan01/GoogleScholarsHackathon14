@@ -20,6 +20,7 @@ import webapp2
 import jinja2
 import os
 import logging
+from user import User
 
 from google.appengine.api import xmpp
 from webapp2_extras import sessions
@@ -61,32 +62,46 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        self.response.write('Hello world!')
-        user = users.get_current_user()
-        if user:
-            greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
-                        (user.nickname(), users.create_logout_url('/')))
-        else:
-            greeting = ('<a href="%s">Sign in or register</a>.' %
-                        users.create_login_url('/'))
-
-        self.response.out.write("<html><body>%s</body></html>" % greeting)
-
+        self.render("home.html")
 
 class ProfileHandler(BaseHandler):
     def get(self):
-        template_values = {}
-        self.render("profile.html", *template_values)
+        user = User()
+        user.first = "Alice"
+        user.age = 19
+        user.tagline = "I am awesome"
+        user.tags = ["Python"]
+        user.interests = ["tennis", "table tennis"]
+        template_values = {"user":user}
+        self.render("profile.html", **template_values)
 
 class MatchHandler(BaseHandler):
     def get(self):
-        template_values = {}
-        self.render("match.html", *template_values)
+        user = User()
+        user.email = "david.patrzeba@gmail.com"
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
+        user.first = "Alice"
+        user.age = 19
+        user.tagline = "I am awesome"
+        user.tags = ["Python"]
+        user.interests = ["tennis", "table tennis"]
+
+        user2 = User()
+        user2.picture = "http://cdn.images.express.co.uk/img/dynamic/79/590x/emma-watson-376861.jpg"
+        user2.first = "Alice2"
+        user2.age = 192
+        user2.tagline = "I am awesome2"
+        user2.tags = ["Python2"]
+        user2.interests = ["tennis2", "table tennis2"]
+
+        current_user = User()
+        users = [user, user2]
+        template_values = {"users":users, "current_user":current_user}
+        self.render("match.html", **template_values)
 
 class HangoutHandler(BaseHandler):
     def get(self):
-        template_values = {}
-        self.render("hangout.html", *template_values)
+        self.redirect("https://www.google.com/+/learnmore/hangouts/")
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

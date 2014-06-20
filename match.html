@@ -1,21 +1,51 @@
 {% extends "base.html" %}
 {% block body %}
-	<h1> Matches </h1>	
-	<div class="matches">
-		{% for user in users %}
-		<li class="slide">
-			<h2> Alice {{user.first}} </h2>
-			Age: {{user.age}} </br>
-			<img src="{{user.picture}}" />
-			Tagline: {{user.tagline}} </br>
-			Boss in: {{user.tags}} </br>
-			Interests: {{user.interests}} </br>
-			<form>
-				<submit> Connect! </submit>
-			</form>
-		</li>
-		{% endfor %}
+	<div class="my-gallery swipeshow">
+		<ul class="slides">
+			{% for user in users %}
+			<li class="slide">
+				<img src="{{user.picture}}" /> <br>
+				<h2> {{user.first}} </h2>
+				Age: {{user.age}} <br>
+				Tagline: 
+					{% for t in user.tags %}
+						<a href=""> {{t}} </a>
+					{% endfor %} <br>
+				Boss in: {{user.tags}} <br>
+				Interests: {{user.interests}} <br>	
+
+<script src="https://apis.google.com/js/platform.js"></script>
+<div id="placeholder-div1"></div>
+
+<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+    <g:hangout render="createhangout"
+        invites="[{ id : '{{user.email}}', invite_type : 'EMAIL' }]">
+    </g:hangout>
+
+			</li>
+			{% endfor %}
+		</ul>
 	</div>
+<link rel='stylesheet' href='/static/jquery.swipeshow.css'>
+<script src='/static/jquery.swipeshow.js'></script>
+<style>
+	.my-gallery {
+	  width: 100%;
+	  height: 500px; 
+	  text-align: center;
+	}
+	img {
+		width: 10%;
+		border: 2px solid;
+    	border-radius: 25px;
+	}
+</style>
 <script>
+	$(function() {
+	  $(".my-gallery").swipeshow({
+	  	autostart: false,
+	  	keys: true,
+	  });
+	});
 </script>
 {% endblock %}

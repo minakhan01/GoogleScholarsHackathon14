@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 {% block body %}
-<form>
-	<h2> Alice {{user.first}} </h2>
-	<img src="{{user.picture}}" />
-	Age: <input type="text" name="age" value="{{user.age}}"> </br>
-	Tagline: <input type="text" name="age" value="{{user.tagline}}"> </br>
-	Boss in: <input type="text" name="age" value="{{user.tags}}"> </br>
-	Interests: <input type="text" name="age" value="{{user.interests}}"> </br>
-	<submit> Update My Profile! </submit>
-</form>
+<div class="form-wrapper">
+	<form method="post">
+		<img src="{{user.picture}}" />
+		<h2> {{user.first}} </h2>
+		Age: <input type="text" name="age" value="{{user.age}}"> <br>
+		Tagline: <input type="text" name="age" value="{{user.tagline}}"> <br>
+		Boss in: <input type="text" name="age" value="{{user.tags}}"> <br>
+		Interests: <input type="text" name="age" value="{{user.interests}}"> <br>
+		<input type="submit" value="Update My Profile!" >
+	</form>
+</div>
+<style>
+
+</style>
 {% endblock %}
