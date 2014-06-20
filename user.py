@@ -2,7 +2,7 @@
 from google.appengine.ext import ndb
 
 class User (ndb.Model):
-    email = ndb.StringProperty()
+    email = ndb.StringProperty(required=True)
     first = ndb.StringProperty()
     last = ndb.StringProperty()
     picture = ndb.StringProperty() # url to picture
@@ -13,3 +13,4 @@ class User (ndb.Model):
     mentors = ndb.StringProperty(repeated=True) # email address to mentor
     gender = ndb.StringProperty() # male/female
     age = ndb.IntegerProperty() #
+    tagling = ndb.StringProperty() # 3 word tagline
