@@ -76,7 +76,7 @@ class MainHandler(BaseHandler):
 class ProfileHandler(BaseHandler):
     def get(self):
         template_values = {}
-        self.write("profile.html", *template_values)
+        self.render("profile.html", *template_values)
 
 class MatchHandler(BaseHandler):
     def get(self):
