@@ -78,6 +78,7 @@ class ProfileHandler(BaseHandler):
 class MatchHandler(BaseHandler):
     def get(self):
         user = User()
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
         user.first = "Alice"
         user.age = 19
         user.tagline = "I am awesome"
@@ -85,6 +86,7 @@ class MatchHandler(BaseHandler):
         user.interests = ["tennis", "table tennis"]
 
         user2 = User()
+        user2.picture = "http://cdn.images.express.co.uk/img/dynamic/79/590x/emma-watson-376861.jpg"
         user2.first = "Alice2"
         user2.age = 192
         user2.tagline = "I am awesome2"
@@ -98,8 +100,7 @@ class MatchHandler(BaseHandler):
 
 class HangoutHandler(BaseHandler):
     def get(self):
-        template_values = {}
-        self.render("hangout.html", **template_values)
+        self.redirect("https://www.google.com/+/learnmore/hangouts/")
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
