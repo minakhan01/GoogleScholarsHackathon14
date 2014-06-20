@@ -20,6 +20,7 @@ import webapp2
 import jinja2
 import os
 import logging
+from user import User
 
 from google.appengine.api import xmpp
 from webapp2_extras import sessions
@@ -75,18 +76,31 @@ class MainHandler(BaseHandler):
 
 class ProfileHandler(BaseHandler):
     def get(self):
-        template_values = {}
-        self.render("profile.html", *template_values)
+        user = User()
+        user.first = "Alice"
+        user.age = 19
+        user.tagline = "I am awesome"
+        user.tags = ["Python"]
+        user.interests = ["tennis", "table tennis"]
+        template_values = {"user":user}
+        self.render("profile.html", **template_values)
 
 class MatchHandler(BaseHandler):
     def get(self):
-        template_values = {}
-        self.render("match.html", *template_values)
+        user = User()
+        user.first = "Alice"
+        user.age = 19
+        user.tagline = "I am awesome"
+        user.tags = ["Python"]
+        user.interests = ["tennis", "table tennis"]
+        users = [user]
+        template_values = {"users":users}
+        self.render("match.html", **template_values)
 
 class HangoutHandler(BaseHandler):
     def get(self):
         template_values = {}
-        self.render("hangout.html", *template_values)
+        self.render("hangout.html", **template_values)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

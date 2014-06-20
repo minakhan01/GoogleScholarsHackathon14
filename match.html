@@ -4,14 +4,14 @@
 	<div class="matches">
 		{% for user in users %}
 		<li class="slide">
-			<h2> Alice {{user.first}} </h2>
+			<h2> {{user.first}} </h2>
 			Age: {{user.age}} </br>
 			<img src="{{user.picture}}" />
 			Tagline: {{user.tagline}} </br>
 			Boss in: {{user.tags}} </br>
 			Interests: {{user.interests}} </br>
 			<form>
-				<submit> Connect! </submit>
+				<input type="submit" value="Connect!" >
 			</form>
 		</li>
 		{% endfor %}
