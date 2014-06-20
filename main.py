@@ -22,7 +22,7 @@ import os
 import logging
 from user import User
 
-from google.appengine.api import xmpp
+from google.appengine.api import oauth
 from webapp2_extras import sessions
 
 jinja_environment = jinja2.Environment(
@@ -31,6 +31,9 @@ config = {}
 """config['webapp2_extras.sessions'] = {
     'secret_key': 'madd',
 }"""
+
+def console(s):
+        sys.stderr.write('%s\n' % s)
 
 class BaseHandler(webapp2.RequestHandler):
     """def dispatch(self):
@@ -63,6 +66,15 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         self.render("home.html")
+        try:
+            # Get the db.User that represents the user on whose behalf the
+            # consumer is making this request.
+            user = oauth.get_current_user()
+            console("I have user")
+
+
+        except oauth.OAuthRequestError, e:
+            self.write("Error")  
 
 class ProfileHandler(BaseHandler):
     def get(self):
