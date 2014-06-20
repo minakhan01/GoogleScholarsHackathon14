@@ -84,7 +84,7 @@ class BaseHandler(webapp2.RequestHandler):
         else:
         	self.format = 'html'
 
-class MainHandler(BlogHandler):
+class MainHandler(BaseHandler):
     def get(self):
         self.response.write('Hello world!')
         user = users.get_current_user()
@@ -98,17 +98,17 @@ class MainHandler(BlogHandler):
         self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 class ProfileHandler(BaseHandler):
-    def get:
+    def get(self):
         template_values = {}
         self.write("profile.html", template.render(template_values))
 
 class MatchHandler(BaseHandler):
-    def get:
+    def get(self):
         template_values = {}
         self.render("match.html", template_values)
 
 class HangoutHandler(BaseHandler):
-    def get:
+    def get(self):
         template_values = {}
         self.render("hangout.html", template_values)
 
