@@ -100,20 +100,17 @@ class MainHandler(BlogHandler):
 class ProfileHandler(BaseHandler):
     def get:
         template_values = {}
-        template = jinja_environment.get_template("profile.html")
-        self.response.out.write(template.render(template_values))
+        self.write("profile.html", template.render(template_values))
 
 class MatchHandler(BaseHandler):
     def get:
         template_values = {}
-        template = jinja_environment.get_template("matching.html")
-        self.response.out.write(template.render(template_values))
+        self.render("matching.html", template_values)
 
 class HangoutHandler(BaseHandler):
     def get:
         template_values = {}
-        template = jinja_environment.get_template("hangout.html")
-        self.response.out.write(template.render(template_values))
+        self.render("hangout.html", template_values)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
