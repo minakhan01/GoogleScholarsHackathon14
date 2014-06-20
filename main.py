@@ -65,6 +65,21 @@ class XMPPHandler(BaseHandler):
         if message.body[0:5].lower() == 'hello':
             message.reply("Greetings!")
 
+class XMPPHandler_available(BaseHandler):
+    def post(self):
+        sender = self.request.get('from').split('/')[0]
+        xmpp.send_presence(sender, status=self.request.get('status'), presence_show=self.request.get('show'))    
+
+class XMPPHandler_unavailable(BaseHandler):
+    def post(self):
+        message = xmpp.Message(self.request.POST)
+
+class XMPPHandler_probe(BaseHandler):
+    def post(self):
+        message = xmpp.Message(self.request.POST)
+        if message.body[0:5].lower() == 'hello':
+            message.reply("Greetings!")                               
+
 class MainHandler(BaseHandler):
     def get(self):
         self.response.write('Hello world!')
@@ -98,5 +113,8 @@ app = webapp2.WSGIApplication([
     ('/profile', ProfileHandler),
     ('/match', MatchHandler),
     ('/hangout', HangoutHandler),
+    ('/_ah/xmpp/presence/available/', XMPPHandler_available),
+    ('/_ah/xmpp/presence/unavailable/', XMPPHandler_unavailable),
+    ('/_ah/xmpp/presence/probe/', XMPPHandler_probe),
     ('/_ah/xmpp/message/chat/', XMPPHandler)
 ], debug=True)
