@@ -38,5 +38,8 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/profile', ProfileHandler),
+    ('/matching', MatchHandler),
+    ('/hangout', HangoutHandler)
 ], debug=True)
