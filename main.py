@@ -21,10 +21,33 @@ import jinja2
 import os
 import logging
 
+from webapp2_extras import sessions
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'madd',
+}
 
-class MainHandler(webapp2.RequestHandler):
+class BaseHandler(webapp2.RequestHandler):
+    def dispatch(self):
+        # Get a session store for this request.
+        self.session_store = sessions.get_store(request=self.request)
+
+        try:
+            # Dispatch the request.
+            webapp2.RequestHandler.dispatch(self)
+        finally:
+            # Save all sessions.
+            self.session_store.save_sessions(self.response)
+
+    @webapp2.cached_property
+    def session(self):
+        # Returns a session using the default cookie key.
+        return self.session_store.get_session()
+
+class MainHandler(BaseHandler):
     def get(self):
         self.response.write('Hello world!')
         user = users.get_current_user()
@@ -36,6 +59,24 @@ class MainHandler(webapp2.RequestHandler):
                         users.create_login_url('/'))
 
         self.response.out.write("<html><body>%s</body></html>" % greeting)
+
+class ProfileHandler(BaseHandler):
+    def get:
+        template_values = {}
+        template = jinja_environment.get_template("profile.html")
+        self.response.out.write(template.render(template_values))
+
+class MatchHandler(BaseHandler):
+    def get:
+        template_values = {}
+        template = jinja_environment.get_template("matching.html")
+        self.response.out.write(template.render(template_values))
+
+class HangoutHandler(BaseHandler):
+    def get:
+        template_values = {}
+        template = jinja_environment.get_template("hangout.html")
+        self.response.out.write(template.render(template_values))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
