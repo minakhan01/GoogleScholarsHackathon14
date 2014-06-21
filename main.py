@@ -23,6 +23,8 @@ import logging
 from user import User
 import sys
 
+from google.appengine.ext import ndb
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -48,9 +50,10 @@ class MainHandler(BaseHandler):
         user = users.get_current_user()
 
         if user:
-            entity = Story.get_by_key_name(key_name, parent=kwds.get('parent'))
+            entity_key = ndb.Key.from_path(user.email())
+            entity = entity_key.get()
             if entity is None:
-                entity = User(email=user.email(), **kwds)
+                entity = User(key_name=user.email(), **kwds)
                 entity.put()
                 self.redirect("profile.html")
             else:
