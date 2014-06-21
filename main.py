@@ -58,7 +58,7 @@ class BaseHandler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
 class MainHandler(BaseHandler):
-    """@decorator.oauth_required
+    @decorator.oauth_required
     def get(self):
         http = decorator.http()
         service = build("plus", "v1", http=http)
@@ -70,6 +70,7 @@ class MainHandler(BaseHandler):
         image=response['image']['url']
 
         self.render("home.html")
+
         try:
             # Get the db.User that represents the user on whose behalf the
             # consumer is making this request.
@@ -87,9 +88,10 @@ class MainHandler(BaseHandler):
                 self.render("home.html")    
 
         except oauth.OAuthRequestError, e:
-            self.write("Error")  """
-    def get(self):
-        self.render("home.html")
+            self.write("Error")  
+
+    """def get(self):
+        self.render("home.html")"""
 
 class ProfileHandler(BaseHandler):
     def get(self):
