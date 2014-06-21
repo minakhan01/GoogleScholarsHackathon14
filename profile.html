@@ -1,8 +1,23 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="form-wrapper">
-	<form method="post">
-		<img src="{{user.picture}}" />
+	<form form action="/profile" method="post">
+    <style>
+    .img-box {
+      height:200px;
+      width:150px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .img-cont {
+      max-width:100%;
+      max-height:100%;
+    }
+    </style>
+
+    <div class="img-box">
+		  <img class="img-cont" src="{{user.picture}}" />
+    </div>
 		<h2> {{user.first}} </h2>
 		Age: <input type="text" name="age" value="{{user.age}}"> <br>
 		Tagline: <input type="text" name="tagline" value="{{user.tagline}}"> <br>

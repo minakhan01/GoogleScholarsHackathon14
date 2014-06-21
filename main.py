@@ -67,6 +67,7 @@ class MainHandler(BaseHandler):
 class ProfileHandler(BaseHandler):
     def get(self):
         user = User()
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
         user.first = "Alice"
         user.age = 19
         user.tagline = "I am awesome"
@@ -74,6 +75,13 @@ class ProfileHandler(BaseHandler):
         user.interests = ["tennis", "table tennis"]
         template_values = {"user":user}
         self.render("profile.html", **template_values)
+
+    def post(self):
+        user.age = self.request.get('age')
+        user.tagline = self.request.get('tagline')
+        user.tags = self.request.get('tags')
+        user.intersts = self.request.get('intersts')
+        user.put()
 
 class MatchHandler(BaseHandler):
     def get(self):
