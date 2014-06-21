@@ -2,7 +2,7 @@
 from google.appengine.ext import db
 
 class User (db.Model):
-    email = db.StringProperty(required=True)
+    email = db.StringProperty()
     first = db.StringProperty()
     last = db.StringProperty()
     picture = db.StringProperty() # url to picture
