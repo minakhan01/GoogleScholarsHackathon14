@@ -80,7 +80,7 @@ class MainHandler(BaseHandler):
                 entity = User.by_email(user.email())
                 entity = User.by_user_id(user_id)
                 if entity is None:
-                    entity = User(user_id=user_id)
+                    entity = User(user_id=, picture=image, name=name)
                     entity.put()
                 self.render("profile.html" % greeting)    
             else:
