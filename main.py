@@ -51,10 +51,12 @@ class MainHandler(BaseHandler):
             entity = User.by_email(user.email())
             if entity is None:
                 entity = User(email=user.email())
+                console(entity)
+                console(user.email())
                 entity.put()
-                self.render("profile.html")
+                self.redirect('/profile')
             else:
-                self.render("match.html")
+                self.redirect('/match')
         else:
             self.render("home.html")
 
