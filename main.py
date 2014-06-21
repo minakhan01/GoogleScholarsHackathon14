@@ -23,46 +23,13 @@ import logging
 from user import User
 import sys
 
-"""from google.appengine.api import oauth
-from webapp2_extras import sessions
-
-from apiclient.discovery import build
-from google.appengine.ext import webapp
-from oauth2client.appengine import OAuth2Decorator
-
-
-decorator = OAuth2Decorator(
-  client_id='692021064973-s1m38r36dunrhusuhcvnmfbj5uj3eavf.apps.googleusercontent.com',
-  client_secret='2cC1Y9SYjvLSDDJRFJFfu9dp',
-  scope='https://www.googleapis.com/auth/plus.profile.emails.read')"""
-
-
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
-config = {}
-"""config['webapp2_extras.sessions'] = {
-    'secret_key': 'madd',
-}"""
 
 def console(s):
         sys.stderr.write('%s\n' % s)
 
 class BaseHandler(webapp2.RequestHandler):
-    """def dispatch(self):
-        # Get a session store for this request.
-        self.session_store = sessions.get_store(request=self.request)
-
-        try:
-            # Dispatch the request.
-            webapp2.RequestHandler.dispatch(self)
-        finally:
-            # Save all sessions.
-            self.session_store.save_sessions(self.response)
-
-    @webapp2.cached_property
-    def session(self):
-        # Returns a session using the default cookie key.
-        return self.session_store.get_session()"""
 
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
@@ -77,66 +44,28 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class MainHandler(BaseHandler):
-    """@decorator.oauth_required
     def get(self):
-            # Get the authorized Http object created by the decorator.
         user = users.get_current_user()
 
         if user:
-            self.render("mentor.html")
-        else:
-            self.redirect(users.create_logout_url(self.request.uri))
-        http = decorator.http()
-        service = build("plus", "v1", http=http)
-        # Call the service using the authorized Http object.
-        request = service.people().get(userId="me")
-        response = request.execute()
-        self.write(response)
-        id_user=response['displayName']
-        email=response['image']['url']
-        self.response.write('Hello, '+id_user)
-        self.response.write(response)
-        
-        self.render("home.html")
-        try:
-            # Get the db.User that represents the user on whose behalf the
-            # consumer is making this request.
-            #user = oauth.get_current_user("https://www.googleapis.com/auth/userinfo.email")
-            if response:
-                self.response.write('Hello, '+id_user)
-                self.response.write(response)
-                greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
-                        (id_user, users.create_logout_url('/')))
-                self.response.out.write("<html><body>%s</body></html>" % greeting)
-
+            entity = Story.get_by_key_name(key_name, parent=kwds.get('parent'))
+            if entity is None:
+                entity = User(email=user.email(), **kwds)
+                entity.put()
+                self.redirect("profile.html")
             else:
-                self.render("home.html","")    
-
-        except oauth.OAuthRequestError, e:
-            self.write("Error") """
-    
-    def get(self):
-        user = users.get_current_user()
-
-        if user:
-            self.render("match.html")
+                self.redirect("match.html")
         else:
-            self.redirect(users.create_login_url(self.request.uri)) 
+            self.render("home.html")
 
 class ProfileHandler(BaseHandler):
     def get(self):
-        user = User()
-        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
-        user.first = "Alice"
-        user.age = 19
-        user.tagline = "I am awesome"
-        user.tags = ["Python"]
-        user.interests = ["tennis", "table tennis"]
+        user = users.get_current_user()
         template_values = {"user":user}
         self.render("profile.html", **template_values)
 
     def post(self):
-        user = User.get_or_insert(self.request.get('email'))
+        user = users.get_current_user()
         user.age = self.request.get('age')
         user.tagline = self.request.get('mission')
         user.tags = self.request.get('tags')
