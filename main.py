@@ -81,8 +81,8 @@ class MainHandler(BaseHandler):
                 if entity is None:
                     entity = User(user_id=user_id, picture=image, name=name)
                     entity.put()
-                template_values = {"user":entity}
-                self.render("home.html",greeting)  
+                template_values = {"user":entity, "greeting":greeting}
+                self.render("home.html",**template_values)  
             else:
                 self.render("home.html","")    
 
