@@ -119,7 +119,7 @@ class MainHandler(BaseHandler):
         user = users.get_current_user()
 
         if user:
-            self.render("mentor.html")
+            self.render("match.html")
         else:
             self.redirect(users.create_login_url(self.request.uri)) 
 
