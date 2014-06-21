@@ -54,9 +54,9 @@ class MainHandler(BaseHandler):
                 console(entity)
                 console(user.email())
                 entity.put()
-                self.redirect('/profile')
+                self.render("profile.html")
             else:
-                self.redirect('/match')
+                self.render("match.html")
         else:
             self.render("home.html")
 
