@@ -23,7 +23,7 @@ import logging
 from user import User
 import sys
 
-from google.appengine.api import oauth
+"""from google.appengine.api import oauth
 from webapp2_extras import sessions
 
 from apiclient.discovery import build
@@ -33,7 +33,7 @@ from oauth2client.appengine import OAuth2Decorator
 decorator = OAuth2Decorator(
   client_id='692021064973-s1m38r36dunrhusuhcvnmfbj5uj3eavf.apps.googleusercontent.com',
   client_secret='2cC1Y9SYjvLSDDJRFJFfu9dp',
-  scope='https://www.googleapis.com/auth/plus.profile.emails.read')
+  scope='https://www.googleapis.com/auth/plus.profile.emails.read')"""
 
 
 jinja_environment = jinja2.Environment(
@@ -76,7 +76,7 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class MainHandler(BaseHandler):
-    @decorator.oauth_required
+    """@decorator.oauth_required
     def get(self):
             # Get the authorized Http object created by the decorator.
         http = decorator.http()
@@ -103,7 +103,14 @@ class MainHandler(BaseHandler):
                 self.render("home.html","")    
 
         except oauth.OAuthRequestError, e:
-            self.write("Error")  
+            self.write("Error") """
+    def get(self):
+        user = users.get_current_user()
+
+        if user:
+            self.render("mentor.html")
+        else:
+            self.redirect(users.create_login_url(self.request.uri)) 
 
 class ProfileHandler(BaseHandler):
     def get(self):
@@ -118,11 +125,13 @@ class ProfileHandler(BaseHandler):
         self.render("profile.html", **template_values)
 
     def post(self):
+        user = User.get_or_insert(self.request.get('email'))
         user.age = self.request.get('age')
         user.tagline = self.request.get('mission')
         user.tags = self.request.get('tags')
-        user.intersts = self.request.get('intersts')
+        user.intersts = self.request.get('interests')
         user.put()
+        
 
 class MatchHandler(BaseHandler):
     def get(self):
@@ -156,6 +165,5 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/profile', ProfileHandler),
     ('/match', MatchHandler),
-    ('/hangout', HangoutHandler),
-    (decorator.callback_path, decorator.callback_handler())
+    ('/hangout', HangoutHandler)
 ], debug=True)
