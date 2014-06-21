@@ -58,8 +58,8 @@ class BaseHandler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
 class MainHandler(BaseHandler):
-    @decorator.oauth_required
-    def get(self):
+    @decorator.oauth_aware
+    def get(self):        
         http = decorator.http()
         service = build("plus", "v1", http=http)
         # Call the service using the authorized Http object.
@@ -70,6 +70,7 @@ class MainHandler(BaseHandler):
         image=response['image']['url']
 
         self.render("home.html")
+
         try:
             # Get the db.User that represents the user on whose behalf the
             # consumer is making this request.
