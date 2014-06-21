@@ -5,8 +5,52 @@
 		<ul class="slides">
 			{% for user in users %}
 			<li class="slide">
+
+			<div class="col-lg-4">
+            <div class="form_hover " style="background-color: #428BCA;">
+                <p style="text-align: center; margin-top: 20px;">
+                    <img src="{{user.picture}}" class="mentorimg"/>
+                    <i class="fa fa-user" style="font-size: 147px;"></i>
+
+                </p>
+                <div class="header">
+                    <div class="blur"></div>
+                    <div class="header-text">
+                        <div class="panel panel-success" style="height: 247px;">
+                            <div class="panel-heading">
+                                <h3 style="color: #FF2A2A;">{{user.first}} </h3> 
+                                <!--#428BCA (blue) -->
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    Age: {{user.age}} <br>
+									Mission: <b>{{user.mission}} </b><br>
+									Skills: 
+										{% for t in user.tags %}
+											<a href=""> {{t}} </a>
+										{% endfor %} <br>
+									Interests: 
+										{% for t in user.interests %}
+											<a href=""> {{t}}, </a>
+										{% endfor %} <br>
+									<br>
+
+                                </div>
+                                <script src="https://apis.google.com/js/platform.js"></script>
+                                <div id="placeholder-div1"></div>
+								<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+								    <g:hangout render="createhangout"
+								        invites="[{ id : '{{user.email}}', invite_type : 'EMAIL' }]">
+								    </g:hangout>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
 	
-				<img src="{{user.picture}}" />
+	<!--			<img src="{{user.picture}}" />
 				<div class="info">
 				<h2> {{user.first}} </h2>
 				Age: {{user.age}} <br>
@@ -28,7 +72,7 @@
 				    <g:hangout render="createhangout"
 				        invites="[{ id : '{{user.email}}', invite_type : 'EMAIL' }]">
 				    </g:hangout>
-				</div>
+				</div> -->
 			</li>
 			{% endfor %}
 		</ul>
@@ -57,11 +101,62 @@
 	.slide {
 		display: block;
 	}
-	img {
-		border: 2px solid;
-    	border-radius: 25px;
+
+	    .form_hover {
+        padding: 0px;
+        position: relative;
+        overflow: hidden;
+        height: 417px;
+    }
+
+ /*       .form_hover:hover .header {
+            opacity: 1;
+            transform: translateY(-172px);
+            -webkit-transform: translateY(-172px);
+            -moz-transform: translateY(-172px);
+            -ms-transform: translateY(-172px);
+            -o-transform: translateY(-172px);
+        } */
+
+        .form_hover img {
+            z-index: 4;
+        }
+
+        .form_hover .header {
+            position: absolute;
+            top: 170px;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form_hover .blur {
+            height: 240px;
+            z-index: 5;
+            position: absolute;
+            width: 100%;
+        }
+
+        .form_hover .caption-text {
+            z-index: 10;
+            color: #fff;
+            position: absolute;
+            height: 240px;
+            text-align: center;
+            top: -20px;
+            width: 100%;
+        }
+
+	img.mentorimg {
+	/*	border: 2px solid;
+    	border-radius: 25px;  
     	max-width: 100%;
-    	max-height: 100%;
+    	max-height: 100%;*/
+    	width: 300px;
+    	height: 300px;
     	float: left;
 	}
 </style>
