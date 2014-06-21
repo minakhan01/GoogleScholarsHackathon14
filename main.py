@@ -26,6 +26,16 @@ import sys
 from google.appengine.api import oauth
 from webapp2_extras import sessions
 
+from apiclient.discovery import build
+from google.appengine.ext import webapp
+from oauth2client.appengine import OAuth2Decorator
+
+decorator = OAuth2Decorator(
+  client_id='692021064973-s1m38r36dunrhusuhcvnmfbj5uj3eavf.apps.googleusercontent.com',
+  client_secret='2cC1Y9SYjvLSDDJRFJFfu9dp',
+  scope='https://www.googleapis.com/auth/plus.login')
+
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 config = {}
@@ -64,14 +74,25 @@ class BaseHandler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
+
 class MainHandler(BaseHandler):
+    @decorator.oauth_required
     def get(self):
+            # Get the authorized Http object created by the decorator.
+        http = decorator.http()
+        service = build("plus", "v1", http=http)
+        # Call the service using the authorized Http object.
+        request = service.people().get(userId="me")
+        response = request.execute(http=http)
         self.render("home.html")
         try:
             # Get the db.User that represents the user on whose behalf the
             # consumer is making this request.
-            user = oauth.get_current_user()
-            console("I have user")
+            #user = oauth.get_current_user("https://www.googleapis.com/auth/userinfo.email")
+            if response:
+                self.response.write('Hello, ' + response['displayName'])
+            else:
+                self.render("home.html")    
 
         except oauth.OAuthRequestError, e:
             self.write("Error")  
@@ -108,5 +129,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/profile', ProfileHandler),
     ('/match', MatchHandler),
-    ('/hangout', HangoutHandler)
+    ('/hangout', HangoutHandler),
+    (decorator.callback_path, decorator.callback_handler())
 ], debug=True)
