@@ -5,17 +5,22 @@
 		<ul class="slides">
 			{% for user in users %}
 			<li class="slide">
+	
 				<img src="{{user.picture}}" />
 				<div class="info">
 				<h2> {{user.first}} </h2>
 				Age: {{user.age}} <br>
 				Mission: {{user.mission}} <br>
-				Tagline: 
+				Tags: 
 					{% for t in user.tags %}
 						<a href=""> {{t}} </a>
 					{% endfor %} <br>
-				Boss in: {{user.tags}} <br>
-				Interests: {{user.interests}} <br>
+				Interests: 
+					{% for t in user.interests %}
+						<a href=""> {{t}}, </a>
+					{% endfor %} <br>
+
+				<br>
 
 				<script src="https://apis.google.com/js/platform.js"></script>
 				<div id="placeholder-div1"></div>
@@ -38,14 +43,19 @@
 	}
 	.my-gallery {
 	  width: 100%;
-	  height: 500px; 
+	  height: 600px; 
 	}
 	.info {
 		height: 100%;
-		position: relative;
-		left: 10%;
 		padding: 5%;
 		text-align: left;
+		background-color: white;
+		margin-left: 50%;
+		border: 2px solid gray;
+    	border-radius: 25px;
+	}
+	.slide {
+		display: block;
 	}
 	img {
 		border: 2px solid;
