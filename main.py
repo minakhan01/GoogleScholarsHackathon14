@@ -59,7 +59,7 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     @decorator.oauth_required
-    def get(self):
+    def get(self):        
         http = decorator.http()
         service = build("plus", "v1", http=http)
         # Call the service using the authorized Http object.
@@ -70,6 +70,7 @@ class MainHandler(BaseHandler):
         image=response['image']['url']
 
         self.render("home.html")
+
         try:
             # Get the db.User that represents the user on whose behalf the
             # consumer is making this request.
@@ -82,26 +83,40 @@ class MainHandler(BaseHandler):
                     entity = User(user_id=user_id, picture=image, name=name)
                     entity.put()
                 template_values = {"user":entity, "greeting":greeting}
-                self.render("home.html",**template_values)  
+                self.render("profile.html",**template_values)  
             else:
-                self.render("home.html","")    
+                self.render("home.html")    
 
         except oauth.OAuthRequestError, e:
             self.write("Error")  
 
+    """def get(self):
+        self.render("home.html")"""
+
 class ProfileHandler(BaseHandler):
     def get(self):
-        user = users.get_current_user()
+        user = User()
+        user.email = "david.patrzeba@gmail.com"
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
+        user.first = "Alice"
+        user.age = 19
+        user.tagline = "I am awesome"
+        user.tags = ["Python"]
+        user.interests = ["tennis", "table tennis"]
         template_values = {"user":user}
         self.render("profile.html", **template_values)
 
     def post(self):
-        user = users.get_current_user()
-        user.age = self.request.get('age')
+        user = User()
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
+        user.email = self.request.get('email')
+        user.age = int(self.request.get('age'))
         user.tagline = self.request.get('mission')
-        user.tags = self.request.get('tags')
+        user.tags = self.request.get('tags').split(",")
         user.intersts = self.request.get('interests')
         user.put()
+        template_values = {"user":user}
+        self.render("profile.html", **template_values)
         
 
 class MatchHandler(BaseHandler):
