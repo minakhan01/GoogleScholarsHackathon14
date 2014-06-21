@@ -6,11 +6,11 @@ class User (db.Model):
     first = db.StringProperty()
     last = db.StringProperty()
     picture = db.StringProperty() # url to picture
-    tags = db.StringProperty(repeated=True)
+    tags = db.StringListProperty(required=True)
     mentorLimit = db.IntegerProperty() # default = 3
     location = db.StringProperty() # optional
-    mentees = db.StringProperty(repeated=True) # email address to mentee
-    mentors = db.StringProperty(repeated=True) # email address to mentor
+    mentees = db.StringListProperty() # email address to mentee
+    mentors = db.StringListProperty() # email address to mentor
     gender = db.StringProperty() # male/female
     age = db.IntegerProperty() #
     mission = db.StringProperty() # 3 word tagline
