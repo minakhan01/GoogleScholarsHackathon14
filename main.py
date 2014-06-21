@@ -78,7 +78,7 @@ class ProfileHandler(BaseHandler):
 
     def post(self):
         user.age = self.request.get('age')
-        user.tagline = self.request.get('tagline')
+        user.tagline = self.request.get('mission')
         user.tags = self.request.get('tags')
         user.intersts = self.request.get('intersts')
         user.put()
