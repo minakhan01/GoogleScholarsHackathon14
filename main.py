@@ -81,8 +81,8 @@ class MainHandler(BaseHandler):
                 if entity is None:
                     entity = User(user_id=user_id, picture=image, name=name)
                     entity.put()
-                template_values = {"user":entity}
-                self.render("profile.html", **template_values)  
+                template_values = {"user":entity, "greeting":greeting}
+                self.render("profile.html",**template_values)  
             else:
                 self.render("home.html")    
 
@@ -94,16 +94,19 @@ class MainHandler(BaseHandler):
 class ProfileHandler(BaseHandler):
     def get(self):
         user = User()
-        user.email = 'aliceworkmail@gmail.com'
+        user.email = "david.patrzeba@gmail.com"
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
+        user.first = "Alice"
         user.age = 19
-        user.tagline = 'to be awesome'
-        user.tags = ['python', 'java']
-        user.intersts = ['ping pong']
+        user.tagline = "I am awesome"
+        user.tags = ["Python"]
+        user.interests = ["tennis", "table tennis"]
         template_values = {"user":user}
         self.render("profile.html", **template_values)
 
     def post(self):
         user = User()
+        user.picture = "http://upload.wikimedia.org/wikipedia/commons/7/7f/Emma_Watson_2013.jpg"
         user.email = self.request.get('email')
         user.age = int(self.request.get('age'))
         user.tagline = self.request.get('mission')
