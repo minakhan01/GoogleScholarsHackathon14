@@ -65,7 +65,8 @@ class MainHandler(BaseHandler):
         # Call the service using the authorized Http object.
         request = service.people().get(userId="me")
         response = request.execute(http=http)
-        id_user=response['displayName']
+        user_id=response['id']
+        name=response['displayName']
         image=response['image']['url']
 
         self.render("home.html")
@@ -75,25 +76,18 @@ class MainHandler(BaseHandler):
             #user = oauth.get_current_user("https://www.googleapis.com/auth/userinfo.email")
             if response:
                 greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
-                        (id_user, users.create_logout_url('/')))
-                self.render("home.html" % greeting)
+                        (name, users.create_logout_url('/')))
+                entity = User.by_email(user.email())
+                entity = User.by_user_id(user_id)
+                if entity is None:
+                    entity = User(user_id=user_id)
+                    entity.put()
+                self.render("profile.html" % greeting)    
             else:
-                self.render("home.html","")    
+                self.render("home.html")    
 
         except oauth.OAuthRequestError, e:
             self.write("Error")  
-
-        user = users.get_current_user()
-        if user:
-            entity = User.by_email(user.email())
-            if entity is None:
-                entity = User(email=user.email())
-                entity.put()
-                self.render("profile.html")
-            else:
-                self.render("match.html")
-        else:
-            self.render("home.html")
 
 class ProfileHandler(BaseHandler):
     def get(self):

@@ -3,8 +3,7 @@ from google.appengine.ext import db
 
 class User (db.Model):
     email = db.StringProperty()
-    first = db.StringProperty()
-    last = db.StringProperty()
+    name = db.StringProperty(required=True)
     picture = db.StringProperty() # url to picture
     tags = db.StringListProperty()
     mentorLimit = db.IntegerProperty() # default = 3
@@ -14,6 +13,7 @@ class User (db.Model):
     gender = db.StringProperty() # male/female
     age = db.IntegerProperty() #
     mission = db.StringProperty() # 3 word tagline
+    user_id=db.StringProperty(required=True)
 
     @classmethod
     def by_id(cls, uid):
@@ -25,6 +25,6 @@ class User (db.Model):
         return u
 
     @classmethod
-    def by_name(cls, first):
-        u = User.all().filter('first =', first).get()
+    def by_user_id(cls, user_id):
+        u = User.all().filter('user_id =', user_id).get()
         return u    
