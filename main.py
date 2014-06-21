@@ -79,11 +79,12 @@ class MainHandler(BaseHandler):
                 greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
                         (name, users.create_logout_url('/')))
                 entity = User.by_user_id(user_id)
+                self.write(greeting)
                 if entity is None:
                     entity = User(user_id=user_id, picture=image, name=name)
                     entity.put()
                 template_values = {"user":entity, "greeting":greeting}
-                self.render("profile.html",**template_values)  
+                #self.redirect('/profile') 
             else:
                 self.render("home.html")    
 
