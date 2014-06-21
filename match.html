@@ -14,29 +14,25 @@
 
                 </p>
                 <div class="header">
-                    <div class="blur"></div>
-                    <div class="header-text">
-                        <div class="panel panel-success" style="height: 247px;">
-                            <div class="panel-heading">
-                                <h3 style="color: #FF2A2A;">{{user.first}} </h3> 
-                                <!--#428BCA (blue) -->
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    Age: {{user.age}} <br>
-									Mission: <b>{{user.mission}} </b><br>
-									Skills: 
-										{% for t in user.tags %}
-											<a href=""> {{t}} </a>
-										{% endfor %} <br>
-									Interests: 
-										{% for t in user.interests %}
-											<a href=""> {{t}}, </a>
-										{% endfor %} <br>
-									<br>
-
-                                </div>
-                                <script src="https://apis.google.com/js/platform.js"></script>
+                    <div class="panel panel-success" style="height: 247px;">
+                        <div class="panel-heading">
+                            <h3 style="color: #FF2A2A;">{{user.first}} </h3> 
+                            <!--#428BCA (blue) -->
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                Age: {{user.age}} <br>
+								Mission: <b>{{user.mission}} </b><br>
+								Skills: 
+									{% for t in user.tags %}
+										<a href=""> {{t}} </a>
+									{% endfor %} <br>
+								Interests: 
+									{% for t in user.interests %}
+										<a href=""> {{t}}, </a>
+									{% endfor %} <br>
+								<br>
+								<script src="https://apis.google.com/js/platform.js"></script>
                                 <div id="placeholder-div1"></div>
 								<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
 								    <g:hangout render="createhangout"
@@ -105,7 +101,10 @@
         padding: 0px;
         position: relative;
         overflow: hidden;
-        height: 800px;
+        height: 500px;
+    }
+    .form_hover .panel-body {
+
     }
 
  /*       .form_hover:hover .header {
