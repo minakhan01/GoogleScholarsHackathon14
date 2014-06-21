@@ -58,7 +58,7 @@ class BaseHandler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
 class MainHandler(BaseHandler):
-    @decorator.oauth_required
+    """@decorator.oauth_required
     def get(self):
         http = decorator.http()
         service = build("plus", "v1", http=http)
@@ -87,16 +87,24 @@ class MainHandler(BaseHandler):
                 self.render("home.html")    
 
         except oauth.OAuthRequestError, e:
-            self.write("Error")  
+            self.write("Error")  """
+    def get(self):
+        self.render("home.html")
 
 class ProfileHandler(BaseHandler):
     def get(self):
-        user = users.get_current_user()
+        user = User()
+        user.email = 'aliceworkmail@gmail.com'
+        user.age = 19
+        user.tagline = 'to be awesome'
+        user.tags = ['python', 'java']
+        user.intersts = ['ping pong']
         template_values = {"user":user}
         self.render("profile.html", **template_values)
 
     def post(self):
-        user = users.get_current_user()
+        user = User()
+        user.email = self.request.email('email')
         user.age = self.request.get('age')
         user.tagline = self.request.get('mission')
         user.tags = self.request.get('tags')
