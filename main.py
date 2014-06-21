@@ -30,6 +30,7 @@ from apiclient.discovery import build
 from google.appengine.ext import webapp
 from oauth2client.appengine import OAuth2Decorator
 
+
 decorator = OAuth2Decorator(
   client_id='692021064973-s1m38r36dunrhusuhcvnmfbj5uj3eavf.apps.googleusercontent.com',
   client_secret='2cC1Y9SYjvLSDDJRFJFfu9dp',
@@ -79,13 +80,22 @@ class MainHandler(BaseHandler):
     """@decorator.oauth_required
     def get(self):
             # Get the authorized Http object created by the decorator.
+        user = users.get_current_user()
+
+        if user:
+            self.render("mentor.html")
+        else:
+            self.redirect(users.create_logout_url(self.request.uri))
         http = decorator.http()
         service = build("plus", "v1", http=http)
         # Call the service using the authorized Http object.
         request = service.people().get(userId="me")
-        response = request.execute(http=http)
+        response = request.execute()
+        self.write(response)
         id_user=response['displayName']
         email=response['image']['url']
+        self.response.write('Hello, '+id_user)
+        self.response.write(response)
         
         self.render("home.html")
         try:
@@ -104,6 +114,7 @@ class MainHandler(BaseHandler):
 
         except oauth.OAuthRequestError, e:
             self.write("Error") """
+    
     def get(self):
         user = users.get_current_user()
 
