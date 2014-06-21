@@ -9,21 +9,21 @@
 				<div class="info">
 				<h2> {{user.first}} </h2>
 				Age: {{user.age}} <br>
+				Mission: {{user.mission}} <br>
 				Tagline: 
 					{% for t in user.tags %}
 						<a href=""> {{t}} </a>
 					{% endfor %} <br>
 				Boss in: {{user.tags}} <br>
-				Interests: {{user.interests}} <br>	
-			
+				Interests: {{user.interests}} <br>
 
-			<script src="https://apis.google.com/js/platform.js"></script>
-			<div id="placeholder-div1"></div>
-			<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
-			    <g:hangout render="createhangout"
-			        invites="[{ id : '{{user.email}}', invite_type : 'EMAIL' }]">
-			    </g:hangout>
-			</div>
+				<script src="https://apis.google.com/js/platform.js"></script>
+				<div id="placeholder-div1"></div>
+				<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+				    <g:hangout render="createhangout"
+				        invites="[{ id : '{{user.email}}', invite_type : 'EMAIL' }]">
+				    </g:hangout>
+				</div>
 			</li>
 			{% endfor %}
 		</ul>
