@@ -14,3 +14,20 @@ class User (ndb.Model):
     gender = ndb.StringProperty() # male/female
     age = ndb.IntegerProperty() #
     mission = ndb.StringProperty() # 3 word tagline
+
+    @classmethod
+    def by_id(cls, uid):
+        return User.get_by_id(uid, parent = users_key())
+
+    @classmethod
+    def by_name(cls, name):
+        u = User.all().filter('name =', name).get()
+        return u
+
+    @classmethod
+    def register(cls, name, email, tags):
+        pw_hash = make_pw_hash(name, pw)
+        return User(parent = users_key(),
+                    name = name,
+                    pw_hash = pw_hash,
+                    email = email)
