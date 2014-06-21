@@ -33,7 +33,7 @@ from oauth2client.appengine import OAuth2Decorator
 decorator = OAuth2Decorator(
   client_id='692021064973-s1m38r36dunrhusuhcvnmfbj5uj3eavf.apps.googleusercontent.com',
   client_secret='2cC1Y9SYjvLSDDJRFJFfu9dp',
-  scope='https://www.googleapis.com/auth/plus.login')
+  scope='https://www.googleapis.com/auth/plus.profile.emails.read')
 
 
 jinja_environment = jinja2.Environment(
@@ -84,16 +84,23 @@ class MainHandler(BaseHandler):
         # Call the service using the authorized Http object.
         request = service.people().get(userId="me")
         response = request.execute(http=http)
+        id_user=response['displayName']
+        email=response['image']['url']
+        
         self.render("home.html")
         try:
             # Get the db.User that represents the user on whose behalf the
             # consumer is making this request.
             #user = oauth.get_current_user("https://www.googleapis.com/auth/userinfo.email")
             if response:
-                self.response.write('Hello, ' + response['displayName'])
+                self.response.write('Hello, '+id_user)
                 self.response.write(response)
+                greeting = ('Welcome, %s! (<a href="%s">sign out</a>)' %
+                        (id_user, users.create_logout_url('/')))
+                self.response.out.write("<html><body>%s</body></html>" % greeting)
+
             else:
-                self.render("home.html")    
+                self.render("home.html","")    
 
         except oauth.OAuthRequestError, e:
             self.write("Error")  
