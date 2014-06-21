@@ -82,9 +82,9 @@ class MainHandler(BaseHandler):
                     entity = User(user_id=user_id, picture=image, name=name)
                     entity.put()
                 template_values = {"user":entity}
-                self.redirect('/profile')  
+                self.render("home.html",greeting)  
             else:
-                self.render("home.html")    
+                self.render("home.html","")    
 
         except oauth.OAuthRequestError, e:
             self.write("Error")  
