@@ -50,8 +50,7 @@ class MainHandler(BaseHandler):
         user = users.get_current_user()
 
         if user:
-            entity_key = ndb.Key.from_path(user.email())
-            entity = entity_key.get()
+            entity = User.by_email(user.email())
             if entity is None:
                 entity = User(key_name=user.email(), **kwds)
                 entity.put()
