@@ -6,17 +6,17 @@
 			{% for user in users %}
 			<li class="slide">
 
-			<div class="col-lg-4">
             <div class="form_hover">
                 <p style="text-align: center; margin-top: 20px;">
-                    <img src="{{user.picture}}" class="mentorimg"/>
+
+                   <img src="{{user.picture}}" class="img-circle" id="mentorimg"/>
                     <i class="fa fa-user" style="font-size: 147px;"></i>
 
                 </p>
                 <div class="header">
                     <div class="panel panel-success" style="height: 247px;">
                         <div class="panel-heading">
-                            <h3 style="color: #FF2A2A;">{{user.first}} </h3> 
+                            <h3 style="color: #428BCA ;">{{user.first}} </h3> 
                             <!--#428BCA (blue) -->
                         </div>
                         <div class="panel-body">
@@ -43,8 +43,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-	
+            	
 	<!--			<img src="{{user.picture}}" />
 				<div class="info">
 				<h2> {{user.first}} </h2>
@@ -101,7 +100,9 @@
         padding: 0px;
         position: relative;
         overflow: hidden;
-        height: 500px;
+        height: 480px;
+        background-color: #f6f6f6;
+        /*background-image: url("static/images/spark-logo.png");*/
     }
     .form_hover .panel-body {
 
@@ -122,7 +123,7 @@
 
         .form_hover .header {
             position: absolute;
-            top: 170px;
+            top: 233px;
             -webkit-transition: all 0.3s ease;
             -moz-transition: all 0.3s ease;
             -o-transition: all 0.3s ease;
@@ -148,14 +149,19 @@
             width: 100%;
         }
 
-	img.mentorimg {
+	#mentorimg {
 	/*	border: 2px solid;
     	border-radius: 25px;  
     	max-width: 100%;
-    	max-height: 100%;*/
-    	width: 300px;
-    	height: 300px;
-    	float: left;
+    	max-height: 100%;
+		float: left;
+    	*/
+    	top:-60px;
+    	padding: 0px;
+    	position: relative;
+    	width: 200px;
+    	height: 200px;
+    	
 	}
 </style>
 <script>
