@@ -59,7 +59,7 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     @decorator.oauth_required
-    def get(self):
+    def get(self):        
         http = decorator.http()
         service = build("plus", "v1", http=http)
         # Call the service using the authorized Http object.
