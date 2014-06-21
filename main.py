@@ -152,6 +152,45 @@ class HangoutHandler(BaseHandler):
     def get(self):
         self.redirect("https://www.google.com/+/learnmore/hangouts/")
 
+class User(db.Model):
+    name = db.StringProperty(required = True)
+    email = db.StringProperty(required = True)
+    teach_one=db.StringProperty(required = True)
+    teach_two=db.StringProperty(required = True)
+    teach_three=db.StringProperty(required = True)
+    learn_one=db.StringProperty(required = True)
+    learn_two=db.StringProperty(required = True)
+    learn_three=db.StringProperty(required = True)
+
+    @classmethod
+    def by_id(cls, uid):
+        return User.get_by_id(uid, parent = users_key())
+
+    @classmethod
+    def by_name(cls, name):
+        u = User.all().filter('name =', name).get()
+        return u
+
+    @classmethod
+    def register(cls, name, email, t
+    each_one, 
+    teach_two,
+    teach_three,
+    learn_one,
+    learn_two,
+    learn_three):
+        pw_hash = make_pw_hash(name, pw)
+        return User(parent = users_key(),
+                    name = name,
+                    pw_hash = pw_hash,
+                    email = email)
+
+    @classmethod
+    def login(cls, name, pw):
+        u = cls.by_name(name)
+        if u and valid_pw(name, pw, u.pw_hash):
+            return u        
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/profile', ProfileHandler),
