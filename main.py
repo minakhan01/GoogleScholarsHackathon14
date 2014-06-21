@@ -91,6 +91,7 @@ class MainHandler(BaseHandler):
             #user = oauth.get_current_user("https://www.googleapis.com/auth/userinfo.email")
             if response:
                 self.response.write('Hello, ' + response['displayName'])
+                self.response.write(response)
             else:
                 self.render("home.html")    
 
