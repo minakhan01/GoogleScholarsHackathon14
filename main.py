@@ -58,7 +58,7 @@ class BaseHandler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
 
 class MainHandler(BaseHandler):
-    @decorator.oauth_aware
+    @decorator.oauth_required
     def get(self):        
         http = decorator.http()
         service = build("plus", "v1", http=http)
