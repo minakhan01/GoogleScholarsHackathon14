@@ -49,14 +49,13 @@ class MainHandler(BaseHandler):
         user = users.get_current_user()
 
         if user:
-            """entity = entity_key.get()
             if entity is None:
                 entity_key = ndb.Key(User, user.email())
                 entity = User(key_name=user.email(), **kwds)
                 entity.put()
                 self.redirect("profile.html")
             else:
-                self.redirect("match.html")"""
+                self.redirect("match.html")
         else:
             self.render("home.html")
 
