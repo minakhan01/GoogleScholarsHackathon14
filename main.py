@@ -104,12 +104,14 @@ class ProfileHandler(BaseHandler):
 
     def post(self):
         user = User()
-        user.email = self.request.email('email')
-        user.age = self.request.get('age')
+        user.email = self.request.get('email')
+        user.age = int(self.request.get('age'))
         user.tagline = self.request.get('mission')
-        user.tags = self.request.get('tags')
+        user.tags = self.request.get('tags').split(",")
         user.intersts = self.request.get('interests')
         user.put()
+        template_values = {"user":user}
+        self.render("profile.html", **template_values)
         
 
 class MatchHandler(BaseHandler):
