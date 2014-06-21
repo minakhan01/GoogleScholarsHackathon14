@@ -6,7 +6,7 @@ class User (db.Model):
     first = db.StringProperty()
     last = db.StringProperty()
     picture = db.StringProperty() # url to picture
-    tags = db.StringListProperty(required=True)
+    tags = db.StringListProperty()
     mentorLimit = db.IntegerProperty() # default = 3
     location = db.StringProperty() # optional
     mentees = db.StringListProperty() # email address to mentee

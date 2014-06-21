@@ -47,15 +47,14 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-
         if user:
+            entity = User.by_email(user.email())
             if entity is None:
-                entity_key = ndb.Key(User, user.email())
-                entity = User(key_name=user.email(), **kwds)
+                entity = User(email=user.email())
                 entity.put()
-                self.redirect("profile.html")
+                self.render("profile.html")
             else:
-                self.redirect("match.html")
+                self.render("match.html")
         else:
             self.render("home.html")
 
